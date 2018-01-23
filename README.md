@@ -41,23 +41,18 @@ PD7 -> 14 (DB15)
 
 # Building the Software
 
-Requirements:
-You will need sdcc (the small device C compiler) in your PATH.
-You will also need Python 3 and PyUSB.
-
-I have only tested this on Arch Linux so far.
-
-````
-cd usb-display
-make
-````
-
+To rebuild the firmware, you will need a Linux system with `sdcc` and `make` installed. Run `make` in the firmware_source directory to generate a new `firmware.ihx` file in the `build` directory.
 To get it to compile on Arch Linux, I had to change the type signature of `putchar` and `getchar` in `fx2lib/include/serial.h` to the following:
 
-````
-void putchar(unsigned char c);
-unsigned char getchar();
-````
+To build the host software, you can use `go build` on Windows.
 
-Attach your development board, run `./test.py` and see if it works. It might need several tries to get the timing right.
+# Running the software
 
+Run `fx2-usb-display.exe <x> <y>`, where `x` and `y` are the top left corner of a 320x240 pixel screen area that will be copied to the display.
+
+
+# License
+
+This software is licensed under the MIT License (see `LICENSE` file).
+
+The firmware is based on `fx2lib`, which is licensed under the LGPL (see `firmware_source/fx2lib/COPYING`).
