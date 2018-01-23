@@ -112,9 +112,11 @@ func tryDownloadFirmware() error {
 		return err
 	}
 
-	fmt.Println("found device, uploading firmware")
-	err = fxload.DownloadFirmwareFile(dev, "firmware.ihx")
 
+	if dev != nil {
+		fmt.Println("found device, uploading firmware")
+		err = fxload.DownloadFirmwareFile(dev, "firmware.ihx")
+	}
 	return err
 }
 
@@ -129,18 +131,21 @@ func main() {
 	defer ctx.Close()
 
 	fmt.Println("looking for dev board to upload to...")
-	tryDownloadFirmware()
+	err := tryDownloadFirmware()
+	if err != nil {
+		log.Println(err.Error())
+	}
 
 	fmt.Println("looking for USB device...")
 
 	tstart := time.Now()
 
 	var dev *gousb.Device
-	var err error
+
 	for {
 		dev, err = ctx.OpenDeviceWithVIDPID(0x16c0, 0x27d8)
 		display.dev = dev
-		if err == nil {
+		if dev != nil && err == nil {
 			break
 		}
 
