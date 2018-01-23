@@ -1,0 +1,15 @@
+*.asm
+*.lst
+*.rel
+*.rst
+*.sym
+*.map
+*.mem
+*.bix
+*.iic
+*.ihx
+*~
+\#*
+build/*
+env/*
+intelhex/__pycache__/*
